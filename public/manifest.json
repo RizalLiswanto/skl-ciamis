@@ -1,0 +1,56 @@
+{
+    "name": "SKL Ciamis",
+    "short_name": "Ciamis",
+    "description": "Sikolamar",
+    "start_url": "/",
+    "display": "standalone",
+    "theme_color": "#27374D",
+    "background_color": "#526D82",
+    "icons": [
+      {
+       "src": "admin/images/logo_lapas_144px.png",
+        "type": "image/png",
+        "sizes": "144x144",
+        "purpose": "any"
+      },
+      {
+        "src": "admin/images/logo_lapas_192px.png",
+        "type": "image/png",
+        "sizes": "192x192",
+        "purpose": "maskable"
+      },
+      {
+        "src": "admin/images/logo_lapas_256px.png",
+        "type": "image/png",
+        "sizes": "256x256",
+        "purpose": "maskable"
+      },
+      {
+        "src": "admin/images/logo_lapas_384px.png",
+        "type": "image/png",
+        "sizes": "384x384",
+        "purpose": "maskable"
+      },
+      {
+        "src": "admin/images/logo_lapas_512px.png",
+        "type": "image/png",
+        "sizes": "512x512",
+        "purpose": "maskable"
+      }
+    ],"screenshots": [
+       {
+            "src": "admin/images/logo_lapas_750px.png", 
+            "sizes": "750x1334", 
+            "type": "image/png",
+            "form_factor": "wide" 
+          },
+          {
+            "src": "admin/images/logo_lapas_1920px.png", 
+            "sizes": "1920x1080", 
+            "type": "image/png",
+            "form_factor": "wide" 
+          }],
+    "lang": "id",
+    "orientation": "portrait",
+    "prefer_related_applications": false
+  }
