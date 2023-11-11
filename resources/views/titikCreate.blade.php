@@ -35,10 +35,10 @@
                                                 <label>{{ __('Nama Titik')}}</label>
                                                 <input type="text" id="nama_titik" name="nama_titik" value="{{ old('nama_titik') }}" placeholder="Nama Titik">
                                             </div>
-                                            {{-- <div class="input__group mb-25">
+                                            <div class="input__group mb-25">
                                                 <label>{{ __('Koordinat')}}</label>
                                                 <input type="text" id="koordinat" name="koordinat" value="{{ old('koordinat') }}" placeholder="koordinat">
-                                            </div> --}}
+                                            </div>
                                             <div class="input__group mb-25">
                                                 <label>{{ __('Kode Barcode')}}</label>
                                                 <div class="input__button">

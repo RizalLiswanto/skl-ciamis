@@ -48,9 +48,9 @@ Route::get('/petugas/nonaktif/{id}','PetugasController@nonaktif');
 Route::get('/petugas/detail/{id}','PetugasController@detail');
 Route::post('/petugas/update','PetugasController@update');
 
-Route::get('/penanda', 'PenandaController@index')->name('penanda.index');
-Route::get('/penanda/create','PenandaController@create')->name('penanda.create');
-Route::post('/penanda/store','PenandaController@store')->name('penanda.store');
-Route::get('/penanda/detail/{id}','PenandaController@detail')->name('penanda.detail');
-Route::post('/penanda/update','PenandaController@update')->name('penanda.update');
+Route::get('/pengawas', 'PenandaController@index')->name('penanda.index');
+Route::get('/pengawas/create','PenandaController@create')->name('penanda.create');
+Route::post('/pengawas/store','PenandaController@store')->name('penanda.store');
+Route::get('/pengawas/detail/{id}','PenandaController@detail')->name('penanda.detail');
+Route::post('/pengawas/update','PenandaController@update')->name('penanda.update');
 

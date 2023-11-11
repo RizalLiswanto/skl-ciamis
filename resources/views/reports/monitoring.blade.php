@@ -84,9 +84,9 @@
                 <tr>
                     <th>No</th>
                     <th>Petugas</th>
-                    <th>Titik</th>
+                    <th>Titik dan Waktu Pemeriksaan</th>
                     <th>Kode Barcode</th>
-                    <th>Waktu Pemeriksaan</th>
+                    
                     <th>Laporan Keadaan</th>
                 </tr>
             </thead>
@@ -98,9 +98,8 @@
                     <tr>
                         <td>{{ $no }}</td>
                         <td>{{ $item->Petugas->nama }}</td>
-                        <td>{{ isset($item->Titik) ? $item->Titik->nama_titik : 'Titik Tidak Ada' }}</td>
+                        <td>{{ isset($item->Titik) ? $item->Titik->nama_titik : 'Titik Tidak Ada' }} {{ $item->jam_pemeriksaan }}</td>
                         <td>{{ $item->kode_barcode }}</td>
-                        <td>{{ $item->jam_pemeriksaan }}</td>
                         <td>{{ $item->laporan_keadaan }}</td>
                     </tr>
                     @php
@@ -111,7 +110,7 @@
         </table>
     </div>
     <div class="footer">
-        <p>Hak Cipta &copy; 2023 Sikolamar Dashboard</p>
+        <p>Hak Cipta &copy; 2023 Lapas Ciamis Dashboard</p>
     </div>
 </body>
 </html>

@@ -35,10 +35,10 @@
             </a>
         </li>
         
-        <li class="{{ isset($menu) && $menu == 'penanda' ? 'mm-active' : '' }}">
-            <a href="/penanda">
+        <li class="{{ isset($menu) && $menu == 'pengawas' ? 'mm-active' : '' }}">
+            <a href="/pengawas">
                 <img src="{{ asset('admin/images/icons/sidebar/dashboard.svg') }}" alt="icon">
-                <span>{{ __('Penanda Tangan') }}</span>
+                <span>{{ __('Pengawas') }}</span>
             </a>
         </li>
      @endif

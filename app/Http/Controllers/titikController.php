@@ -85,6 +85,7 @@ class titikController extends Controller
 
                     $createTitik                = new Titik();
                     $createTitik->nama_titik    = $request->nama_titik;
+                    $createTitik->koordinat    = $request->koordinat;
                     $createTitik->kode_barcode  = $request->barcode;
                     $createTitik->status        = 1;
                     $createTitik->save();

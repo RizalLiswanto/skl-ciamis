@@ -98,11 +98,13 @@ Route::post('/monitoring', function(Request $request) {
 
 Route::get('/getTitik', function(Request $request)
 {
+    
     if($request->query('barcode') != null)
+
+    
     {
         $getNama = Titik::where('kode_barcode',$request->query('barcode'))->first();
 
-        
 
         if($getNama == null)
         {
@@ -117,9 +119,13 @@ Route::get('/getTitik', function(Request $request)
                 'success'   => true,
                 'message'   => 'Data Ada',
                 'nama'      => $getNama->nama_titik,
+                'koordinat' => $getNama->koordinat,
                 'id'        => $getNama->id,
             ];
+
+           
         }
+        
 
         
         
@@ -128,6 +134,7 @@ Route::get('/getTitik', function(Request $request)
     $titik = Titik::where('status',1)->get();
 
     return response()->json($titik);
+    // dd($titik);
 });
 
 

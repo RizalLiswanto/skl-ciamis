@@ -34,7 +34,7 @@
                         <thead>
                         <tr>
                             <th>{{ __('Nama Titik')}}</th>
-                            <th>{{ __('Kode Barcode')}}</th>
+                            <th>{{ __('Kode QRcode')}}</th>
                             <th>{{ __('Koordinat')}}</th>
                             <th>{{ __('Status')}}</th>
                             <th>{{ __('Aksi')}}</th>

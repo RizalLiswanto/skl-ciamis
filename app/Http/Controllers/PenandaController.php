@@ -20,7 +20,7 @@ class PenandaController extends Controller
                     ->addIndexColumn()
                     ->addColumn('action', function ($data) {
                         $btn = '<div class="action__buttons">';
-                        $btn .= '<a href="/penanda/detail/' . $data->id. '" class="btn-action" title="Edit"><i class="fas fa-pen-to-square"></i></a>';
+                        $btn .= '<a href="/pengawas/detail/' . $data->id. '" class="btn-action" title="Edit"><i class="fas fa-pen-to-square"></i></a>';
                         $btn .= '</div>';
                         return $btn;
                     })
@@ -39,7 +39,7 @@ class PenandaController extends Controller
                     ->rawColumns(['action', 'urutan', 'nama_pejabat', 'nip', 'jabatan'])
                     ->make(true);
             }
-            $data['title'] = __('Data Penanda Tangan Pejabat');
+            $data['title'] = __('Data Pengawas');
             return view('penanda', $data);
         }
 
@@ -51,7 +51,7 @@ class PenandaController extends Controller
         
         if (session('user'))
         {
-            $data['title'] = __('Data Penanda Tangan');
+            $data['title'] = __('Data Pengawas');
             return view('penandaCreate',$data);
         }
         
@@ -74,13 +74,13 @@ class PenandaController extends Controller
                     $cekKode->jabatan         = $request->jabatan;
                     $cekKode->save();
     
-                    return redirect('/penanda')->with('success','Penanda Tangan  '.$cekKode->nama_pejabat.' Berhasil Ditambahkan !');
+                    return redirect('/pengawas')->with('success','Pengawas '.$cekKode->nama_pejabat.' Berhasil Ditambahkan !');
                 }
 
-                return back()->with('error','Penanda Tangan Dengan NIP : '.$request->nip.' Sudah Ada !');
+                return back()->with('error','Pengawas Dengan NIP : '.$request->nip.' Sudah Ada !');
 
             }catch(Exception $e) {
-                return back()->with('error','Petugas '.$request->nama_pejabat.' Gagal Ditambahkan !');
+                return back()->with('error','Pengawas '.$request->nama_pejabat.' Gagal Ditambahkan !');
             }
         }
         
@@ -93,7 +93,7 @@ class PenandaController extends Controller
         if (session('user'))
         {
             $data['data']   = Penanda::where('id',$id)->first();
-            $data['title']  = __('Data Penanda tangan');
+            $data['title']  = __('Data Pengawas');
             return view('penandaEdit',$data);
         }
         
@@ -116,7 +116,7 @@ class PenandaController extends Controller
                     $cekKode->jabatan         = $request->jabatan;
                     $cekKode->save();
 
-                    return redirect('/penanda')->with('success','Penanda Tangan '.$cekKode->nama_pejabat.' Berhasil Diubah !');
+                    return redirect('/pengawas')->with('success','Pengawas '.$cekKode->nama_pejabat.' Berhasil Diubah !');
                 }
 
                 $cekDuplikat = Penanda::where('nip',$request->nip)->first();
@@ -129,13 +129,13 @@ class PenandaController extends Controller
                     $cekKode->jabatan         = $request->jabatan;
                     $cekKode->save();
 
-                    return redirect('/penanda')->with('success','Penanda Tangan '.$cekKode->nama_pejabat.' Berhasil Diubah !');
+                    return redirect('/pengawas')->with('success','Pengawas '.$cekKode->nama_pejabat.' Berhasil Diubah !');
                 }
 
-                return back()->with('error','Penanda Tangan Dengan NIP :  '.$request->nip.' Sudah Terdaftar !');
+                return back()->with('error','Pengawas Dengan NIP :  '.$request->nip.' Sudah Terdaftar !');
 
             }catch(Exception $e) {
-                return back()->with('error','Penanda '.$request->nama_pejabat.' Gagal Diubah !');
+                return back()->with('error','Pengawas'.$request->nama_pejabat.' Gagal Diubah !');
             }
         }
         

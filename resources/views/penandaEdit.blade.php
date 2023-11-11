@@ -1,4 +1,4 @@
-@extends('admin.master', ['menu' => 'penanda'])
+@extends('admin.master', ['menu' => 'pengawas'])
 @section('title', isset($title) ? $title : '')
 @section('content')
     <div class="row">
@@ -6,14 +6,14 @@
             <div class="breadcrumb__content">
                 <div class="breadcrumb__content__left">
                     <div class="breadcrumb__title">
-                        <h2>{{__('Data Penanda Tangan')}}</h2>
+                        <h2>{{__('Data Pengawas')}}</h2>
                     </div>
                 </div>
                 <div class="breadcrumb__content__right">
                     <nav aria-label="breadcrumb">
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/dashboard">{{__('Home')}}</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">{{__('Data Penada Tangan')}}</li>
+                            <li class="breadcrumb-item active" aria-current="page">{{__('Data Pengawas')}}</li>
                         </ul>
                     </nav>
                 </div>
@@ -36,8 +36,8 @@
                                                 <input type="text" id="urutan" name="urutan" value="{{$data->urutan }}" placeholder="Urutan">
                                             </div>
                                             <div class="input__group mb-25">
-                                                <label>{{ __('Nama Pejabat')}}</label>
-                                                <input type="text" id="nama_pejabat" name="nama_pejabat" value="{{ $data->nama_pejabat}}" placeholder="Nama Pejabat">
+                                                <label>{{ __('Nama Pengawas')}}</label>
+                                                <input type="text" id="nama_pejabat" name="nama_pejabat" value="{{ $data->nama_pejabat}}" placeholder="Nama Pengawas">
                                             </div>
                                             <div class="input__group mb-25">
                                                 <label>{{ __('NIP')}}</label>
