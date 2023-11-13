@@ -99,6 +99,7 @@
                         <div class="input__group mb-25">
                             <select name="filter" id="filter" required>
                                 <option value="">Semua Data</option>
+                                <option value="pertanggal">Pertanggal</option>
                                 @foreach ($filterData as $dt)
                                 @php
                                     $valueBulan         = strftime("%B", strtotime($dt->bulan_tahun));
@@ -148,7 +149,22 @@
                                 @endphp
                                     <option value="{{$dt->bulan_tahun}}">{{$fixValue}}</option>
                                 @endforeach
+                               
+                                
+                                
                             </select>
+                        </div>
+                        <div id="dateRangeFilter" style="display: none;">
+                            <div class="status__box__data">
+                                <div class="input__group mb-25">
+                                    <h3>Dari tanggal</h3>
+                                    <input type="date" id="start_date" name="start_date">
+                                    <h3>Sampai tanggal</h3>
+                                    <input type="date" id="end_date" name="end_date">
+                                    <P> </P>
+                                    <button class="btn btn-sm btn-info" id="filter_by_date"style="font-size: 12px; padding: 6px 12px;">Filter</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -217,8 +233,50 @@
         <script src="{{asset('backend/js/admin/datatables/monitoring.js')}}"></script>
         <script>
             $('#download-report').on('click', function() {
-                window.location.href = '/generateReport?filter='+$('#filter').val();
-            });
+    var filterValue = $('#filter').val();
+    var startDate = $('#start_date').val();
+    var endDate = $('#end_date').val();
+
+    var url = '/generateReport?filter=' + filterValue;
+
+    if (filterValue === 'pertanggal') {
+        if (startDate && endDate) {
+            url += '&start_date=' + startDate + '&end_date=' + endDate;
+        } else {
+            // Tambahkan logika jika start_date atau end_date tidak diisi
+        }
+    }
+
+    window.location.href = url;
+});
+
         </script>
+       <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dapatkan elemen yang dibutuhkan
+            const dateRangeFilter = document.getElementById('dateRangeFilter');
+            const filterOption = document.getElementById('filter');
+            const startDate = document.getElementById('start_date');
+            const endDate = document.getElementById('end_date');
+            const filterButton = document.getElementById('filter_by_date');
+        
+            // Sembunyikan div tanggal saat halaman dimuat
+            dateRangeFilter.style.display = 'none';
+        
+            // Tambahkan event listener untuk perubahan pada dropdown
+            filterOption.addEventListener('change', function() {
+                if (filterOption.value === 'pertanggal') {
+                    dateRangeFilter.style.display = 'block'; // Tampilkan div tanggal
+                } else {
+                    dateRangeFilter.style.display = 'none'; // Sembunyikan jika opsi selain "Pertanggal" dipilih
+                }
+            });
+
+        });
+        </script>
+        
+
+    
+       
     @endpush
 @endsection

@@ -29,10 +29,23 @@
             ]
         });
 
-        $('#filter').on('change', function() {
-            var newValue = $(this).val();
-            $('#CategoryTable').DataTable().ajax.url($('#table-url').data("url") + '?filter=' + newValue).load();
-        });
+       // Filter by date
+       $('#filter_by_date, #filter').on('click change', function() {
+        var startDate = $('#start_date').val();
+        var endDate = $('#end_date').val();
+        var filterOption = $('#filter').val();
+    
+        var url = $('#table-url').data("url");
+        if (filterOption === 'pertanggal') {
+            url += '?start_date=' + startDate + '&end_date=' + endDate;
+        } else {
+            url += '?filter=' + filterOption;
+        }
+    
+        $('#CategoryTable').DataTable().ajax.url(url).load();
+    });
+    
+
 
         $('#CategoryTableToday').DataTable({
             processing: true,

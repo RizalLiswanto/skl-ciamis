@@ -15,31 +15,43 @@ use PDF;
 
 class dashboardController extends Controller
 {
-    public function index(Request $request){
-        if(session('user'))
-        {
+    public function index(Request $request)
+    {
+        if (session('user')) {
             $startDate = date('Y-m-d 00:00:00');
             $endDate = date('Y-m-d 23:59:59');
 
             $data['filterData'] = DB::table('monitoring')
-                                    ->selectRaw("DATE_FORMAT(STR_TO_DATE(jam_pemeriksaan, '%d-%m-%Y %H:%i'), '%Y-%m') AS bulan_tahun")
-                                    ->groupBy('bulan_tahun')
-                                    ->get();
+                ->selectRaw("DATE_FORMAT(STR_TO_DATE(jam_pemeriksaan, '%d-%m-%Y %H:%i'), '%Y-%m') AS bulan_tahun")
+                ->groupBy('bulan_tahun')
+                ->get();
 
-            
-                                      
 
-         
+
+
+
             if ($request->ajax()) {
                 $query = Monitoring::latest()->get();
                 if ($request->filter != null) {
                     $filterDate = Carbon::createFromFormat('Y-m', $request->filter);
-                
+
                     $query = Monitoring::latest()
-                            ->whereRaw("MONTH(STR_TO_DATE(jam_pemeriksaan, '%d-%m-%Y %H:%i')) = ?", $filterDate->month)
-                            ->whereRaw("YEAR(STR_TO_DATE(jam_pemeriksaan, '%d-%m-%Y %H:%i')) = ?", $filterDate->year)
-                            ->get();
+                        ->whereRaw("MONTH(STR_TO_DATE(jam_pemeriksaan, '%d-%m-%Y %H:%i')) = ?", $filterDate->month)
+                        ->whereRaw("YEAR(STR_TO_DATE(jam_pemeriksaan, '%d-%m-%Y %H:%i')) = ?", $filterDate->year)
+                        ->get();
                 }
+                if ($request->start_date && $request->end_date) {
+
+                    $query = Monitoring::latest()
+
+
+                        ->whereBetween(DB::raw("STR_TO_DATE(jam_pemeriksaan, '%d-%m-%Y %H:%i')"), [
+                            Carbon::createFromFormat('Y-m-d', $request->start_date)->startOfDay(),
+                            Carbon::createFromFormat('Y-m-d', $request->end_date)->endOfDay()
+                        ])
+                        ->get();
+                }
+
                 return DataTables::of($query)
                     ->addIndexColumn()
                     ->editColumn('petugas', function ($query) {
@@ -57,7 +69,7 @@ class dashboardController extends Controller
                     ->editColumn('laporan', function ($query) {
                         return $query->laporan_keadaan;
                     })
-                    ->rawColumns(['action', 'petugas', 'titik', 'kode','jam_pemeriksaan','laporan'])
+                    ->rawColumns(['action', 'petugas', 'titik', 'kode', 'jam_pemeriksaan', 'laporan'])
                     ->make(true);
             }
 
@@ -65,28 +77,29 @@ class dashboardController extends Controller
             $countMonitoringHarian  = count(Monitoring::where('created_at', '>=', $startDate)->where('created_at', '<=', $endDate)->get());
             $countTitik             = count(Titik::get());
             $countPetugas           = count(User::get());
-            
+
             $data['monitoring']             = $countMonitoring;
             $data['monitoringHarian']       = $countMonitoringHarian;
             $data['titik']                  = $countTitik;
             $data['petugas']                = $countPetugas;
             $data['title']                  = __('Dashboard');
-            
+
             return view('dashboard', $data);
         }
 
         return redirect('/');
     }
 
-    public function getDataToday(Request $request){
+    public function getDataToday(Request $request)
+    {
 
         $startDate = date('Y-m-d 00:00:00');
         $endDate = date('Y-m-d 23:59:59');
 
         if ($request->ajax()) {
             $data = Monitoring::where('created_at', '>=', $startDate)
-                    ->where('created_at', '<=', $endDate)
-                    ->get();
+                ->where('created_at', '<=', $endDate)
+                ->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->editColumn('petugas', function ($data) {
@@ -104,26 +117,41 @@ class dashboardController extends Controller
                 ->editColumn('laporan', function ($data) {
                     return $data->laporan_keadaan;
                 })
-                ->rawColumns(['action', 'petugas', 'titik', 'kode','jam_pemeriksaan','laporan'])
+                ->rawColumns(['action', 'petugas', 'titik', 'kode', 'jam_pemeriksaan', 'laporan'])
                 ->make(true);
         }
-
     }
 
     public function generateReport(Request $request)
-    {
-        if ($request->filter != null) {
+    {  
+        if ($request->filter = "pertanggal") {
+
+            if($request->start_date && $request->end_date){
+
+             
+                $data = Monitoring::latest()
+                ->whereBetween(DB::raw("STR_TO_DATE(jam_pemeriksaan, '%d-%m-%Y %H:%i')"), [
+                    Carbon::createFromFormat('Y-m-d', $request->start_date)->startOfDay(),
+                    Carbon::createFromFormat('Y-m-d', $request->end_date)->endOfDay()
+                ])
+                
+                ->get();
+                $fileName = "monitoring_report_dari_" . $request->start_date . " sampai_" . $request->end_date . ".pdf";
+ 
+            }
+        }elseif ($request->filter != null) {
             $filterDate = Carbon::createFromFormat('Y-m', $request->filter);
 
             $data = Monitoring::latest()
                 ->whereRaw("MONTH(STR_TO_DATE(jam_pemeriksaan, '%d-%m-%Y %H:%i')) = ?", $filterDate->month)
                 ->whereRaw("YEAR(STR_TO_DATE(jam_pemeriksaan, '%d-%m-%Y %H:%i')) = ?", $filterDate->year)
                 ->get();
-                $fileName = "monitoring_report_".$filterDate->month."_".$filterDate->year.".pdf";
-        } else {
+            $fileName = "monitoring_report_" . $filterDate->month . "_" . $filterDate->year . ".pdf";
+        }else {
             $data = Monitoring::latest()->get();
             $fileName = "monitoring_report_semua_data.pdf";
         }
+        
 
         // Generate PDF
         $pdf = PDF::loadView('reports.monitoring', ['data' => $data]);

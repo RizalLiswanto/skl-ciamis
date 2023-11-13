@@ -7,7 +7,7 @@ use Laravel\Passport\HasApiTokens;
 
 class User extends Model
 {
-    use HasApiTokens;
+  
     protected $table = 'user';
 
     public function Bagian(): BelongsTo
